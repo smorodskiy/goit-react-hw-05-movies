@@ -19,6 +19,8 @@
 //     "vote_count": 1387
 // }
 
+import { Link } from "react-router-dom";
+
 export const MovieList = ({ movies }) => {
   return (
     <div>
@@ -26,7 +28,7 @@ export const MovieList = ({ movies }) => {
       <ul>
         {movies.map(film => {
           const { id, original_title } = film;
-          return <li key={id}>{original_title}</li>;
+          return <li key={id}><Link to={`/movies/${id}`}>{original_title}</Link></li>;
         })}
       </ul>
     </div>
