@@ -46,7 +46,7 @@ export const fetchMovie = async ({ keyword, page }) => {
                 param.set("page", page);
         }
 
-        const {data} = await axios.get(`${url}?${param.toString()}`)
+        const { data } = await axios.get(`${url}?${param.toString()}`)
         return data.results;
 };
 
@@ -76,6 +76,6 @@ export const fetchMovieDetailsById = async (id) => {
 
         const urlId = `movie/${id}`;
         
-        // console.log(`${url}${urlId}?${param.toString()}`);
-        return axios.get(`${url}${urlId}?${param.toString()}`);
+        const { data } = await axios.get(`${url}${urlId}?${param.toString()}`);
+        return data;
 };
