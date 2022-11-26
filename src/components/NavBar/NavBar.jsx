@@ -5,11 +5,14 @@ import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
-import Button from '@mui/material/Button';
+import { Link } from 'react-router-dom';
 
-const navItems = ['Home', 'Movies'];
+const navItems = [
+  { name: 'Home', path: '/' },
+  { name: 'Movies', path: '/movies' },
+];
 
-function NavBar() {
+export const NavBar = () => {
   return (
     <Box sx={{ display: 'flex' }}>
       <AppBar component="nav">
@@ -21,22 +24,20 @@ function NavBar() {
           >
             Kinoteka
           </Typography>
-          <Box sx={{ display: 'block' }}>
-            {navItems.map((item) => (
-              <Button key={item} sx={{ color: '#fff' }}>
-                {item}
-              </Button>
+          <Box sx={{ display: 'flex', gap: 2 }}>
+            {navItems.map(({ name, path }) => (
+              <Link to={`${path}`} key={name} sx={{ color: '#fff' }}>
+                {name}
+              </Link>
             ))}
           </Box>
         </Toolbar>
       </AppBar>
 
-      <Box component="main" sx={{ p: 3 }}>
-
-      </Box>
+      <Box component="main" sx={{ p: 3 }}></Box>
     </Box>
   );
-}
+};
 
 NavBar.propTypes = {
   /**
@@ -45,5 +46,3 @@ NavBar.propTypes = {
    */
   window: PropTypes.func,
 };
-
-export default NavBar;
