@@ -1,10 +1,17 @@
 import { useEffect, useState } from 'react';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { fetchMovieDetailsById } from 'utils/api';
+import {
+  BackButton,
+  Overview,
+  PosterImage,
+  Title,
+  Wrapper,
+} from './MovieDetails.styled';
 
 const PREFIX_POSTER_URL = 'https://image.tmdb.org/t/p/w500/';
 
-export const MovieDetails = () => {
+const MovieDetails = () => {
   const { movieId } = useParams();
   const [movie, setMovie] = useState(null);
   const location = useLocation();
@@ -25,14 +32,23 @@ export const MovieDetails = () => {
   if (!movie) return;
 
   return (
-    <div>
-      <button onClick={handleGoBack}>Go back</button>
-      <h2>{movie.title}</h2>
-      <img
-        src={`${PREFIX_POSTER_URL}/${movie.poster_path}`}
-        alt={`${movie.title}`}
-      />
-      <p>{movie.overview}</p>
-    </div>
+    <>
+      <BackButton onClick={handleGoBack}>Go back</BackButton>
+      <Wrapper>
+        <PosterImage
+          src={`${PREFIX_POSTER_URL}/${movie.poster_path}`}
+          alt={`${movie.title}`}
+        />
+        <div>
+          <Title>{movie.title}</Title>
+          <Overview>
+            <b>Overview</b>
+            <p>{movie.overview}</p>
+          </Overview>
+        </div>
+      </Wrapper>
+    </>
   );
 };
+
+export default MovieDetails;
