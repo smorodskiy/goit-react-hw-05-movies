@@ -17,11 +17,15 @@ export const BackButton = styled.button`
   }
 `;
 
-export const Wrapper = styled.div`
+export const MovieDetailsWrapper = styled.div`
   display: flex;
   flex-direction: row;
   gap: 15px;
-  padding: 20px 0px 20px 20px;
+  padding: 20px;
+`;
+
+export const AddInfoWrapper = styled.div`
+  padding: 20px;
 `;
 
 export const PosterImage = styled.img`
@@ -32,4 +36,4 @@ export const Title = styled.h2`
   margin-bottom: 20px;
 `;
 
-export const Overview = styled.p``;
+export const Overview = styled.div``;
