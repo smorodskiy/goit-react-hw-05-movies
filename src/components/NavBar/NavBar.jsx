@@ -12,30 +12,26 @@ const navItems = [
   { name: 'Movies', path: '/movies' },
 ];
 
-export const NavBar = () => {
+const NavBar = () => {
   return (
-    <Box sx={{ display: 'flex' }}>
-      <AppBar component="nav">
-        <Toolbar>
-          <Typography
-            variant="h6"
-            component="div"
-            sx={{ flexGrow: 1, display: 'block' }}
-          >
-            Kinoteka
-          </Typography>
-          <Box sx={{ display: 'flex', gap: 2 }}>
-            {navItems.map(({ name, path }) => (
-              <Link to={`${path}`} key={name} sx={{ color: '#fff' }}>
-                {name}
-              </Link>
-            ))}
-          </Box>
-        </Toolbar>
-      </AppBar>
-
-      <Box component="main" sx={{ p: 3 }}></Box>
-    </Box>
+    <AppBar component="nav" sx={{ position: 'relative', marginBottom: 2 }}>
+      <Toolbar>
+        <Typography
+          variant="h6"
+          component="div"
+          sx={{ flexGrow: 1, display: 'block' }}
+        >
+          Kinoteka
+        </Typography>
+        <Box sx={{ display: 'flex', gap: 2 }}>
+          {navItems.map(({ name, path }) => (
+            <Link to={`${path}`} key={name} sx={{ color: '#fff' }}>
+              {name}
+            </Link>
+          ))}
+        </Box>
+      </Toolbar>
+    </AppBar>
   );
 };
 
@@ -46,3 +42,5 @@ NavBar.propTypes = {
    */
   window: PropTypes.func,
 };
+
+export default NavBar;
