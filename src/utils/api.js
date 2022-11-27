@@ -1,81 +1,40 @@
-import axios from "axios";
+import axios from 'axios';
 
-const URL = "https://api.themoviedb.org/3/";
-const API_KEY = "d5db08081a23b85f2c18e58b0bb5a9b8";
+axios.defaults.baseURL = 'https://api.themoviedb.org/3/';
+const API_KEY = 'd5db08081a23b85f2c18e58b0bb5a9b8';
 
-// API Key (v3 auth)
-// d5db08081a23b85f2c18e58b0bb5a9b8
+export const getTrendingMovies = async () => {
+  const { data } = await axios.get(`trending/movie/week?api_key=${API_KEY}`);
 
-// by ID
-// https://api.themoviedb.org/3/movie/550?api_key=d5db08081a23b85f2c18e58b0bb5a9b8
-
-// Search for keyword
-// https://api.themoviedb.org/3/search/movie?api_key=d5db08081a23b85f2c18e58b0bb5a9b8&query=mov
-
-// Get popular
-// https://api.themoviedb.org/3/movie/popular?api_key=d5db08081a23b85f2c18e58b0bb5a9b8&language=en-US&page=1
-
-// API Read Access Token (v4 auth)
-// eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJkNWRiMDgwODFhMjNiODVmMmMxOGU1OGIwYmI1YTliOCIsInN1YiI6IjYzM2VkODczN2Q0MWFhMDA3OWZjNGFlOCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.jRi_XACbwedc_uUlQPnSBP7cGTbkSX4n9YPEkKTbzyQ
-
-// https://api.themoviedb.org/3/genre/movie/list?api_key=d5db08081a23b85f2c18e58b0bb5a9b8&language=en-US
-
-// Fetch to Movies API
-// return Film by keyword or Popular films
-export const fetchMovie = async ({ keyword, page }) => {
-        // Get base URL
-        let url = URL;
-
-        // Set default param
-        const param = new URLSearchParams({
-                api_key: API_KEY,
-        });
-
-        // Search for keywords, else post for popular movies
-        if (keyword) {
-                param.set("query", keyword);
-                url = `${url}search/movie`;
-        } else {
-                url = `${url}movie/popular`;
-                // For this link a lot of movies doesn't detail info
-                // url = `${url}trending/all/week`;
-        }
-
-        // Page param
-        if (page) {
-                param.set("page", page);
-        }
-
-        const { data } = await axios.get(`${url}?${param.toString()}`)
-        return data.results;
+  return data.results;
 };
 
-// Get all genres list
-export const fetchGenres = async () => {
-        // Get base URL
-        let url = URL;
+export const getMovieById = async movieId => {
+  const res = await axios.get(`movie/${movieId}?api_key=${API_KEY}&language=en-US`);
 
-        // Set default param
-        const param = new URLSearchParams({
-                api_key: API_KEY,
-        });
-
-        url = `${url}genre/movie/list`;
-
-        return axios.get(`${url}?${param.toString()}`);
+  return res.data;
 };
 
-// Get movie info by id
-export const fetchMovieDetailsById = async (id) => {
-        let url = URL;
+export const getMovieByQuery = async query => {
+  const res = await axios.get(
+    `search/movie?api_key=${API_KEY}&query=${query}&language=en-US&page=1&include_adult=false`
+  );
 
-        const param = new URLSearchParams({
-                api_key: API_KEY,
-                append_to_response: 'videos', //,images
-        });
+  return res.data.results;
+};
 
-        const urlId = `movie/${id}`;
-        
-        const { data } = await axios.get(`${url}${urlId}?${param.toString()}`);
-        return data;
+export const getActors = async movieId => {
+  const res = await axios.get(
+    `movie/${movieId}/credits?api_key=${API_KEY}&language=en-US`
+  );
+
+  return res.data.cast;
+};
+
+export const getReviews = async movieId => {
+  const res = await axios.get(
+    `movie/${movieId}/reviews?api_key=${API_KEY}&language=en-US&page=1`
+  );
+
+  return res.data.results;
 };
