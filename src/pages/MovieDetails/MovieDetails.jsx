@@ -1,12 +1,13 @@
 import { useEffect, useState } from 'react';
-import { useLocation, useNavigate, useParams } from 'react-router-dom';
-import { fetchMovieDetailsById } from 'utils/api';
+import { Link, Outlet, useLocation, useNavigate, useParams } from 'react-router-dom';
+import { getMovieById } from 'utils/api';
 import {
   BackButton,
   Overview,
   PosterImage,
   Title,
-  Wrapper,
+  MovieDetailsWrapper,
+  AddInfoWrapper,
 } from './MovieDetails.styled';
 
 const PREFIX_POSTER_URL = 'https://image.tmdb.org/t/p/w500/';
@@ -17,24 +18,20 @@ const MovieDetails = () => {
   const location = useLocation();
   const navigate = useNavigate();
 
-  console.log(location);
-
   const handleGoBack = () => {
     navigate(location.state.from);
   };
 
   useEffect(() => {
-    fetchMovieDetailsById(movieId).then(setMovie);
+    getMovieById(movieId).then(setMovie);
   }, [movieId]);
-
-  console.log(movie);
 
   if (!movie) return;
 
   return (
     <>
       <BackButton onClick={handleGoBack}>Go back</BackButton>
-      <Wrapper>
+      <MovieDetailsWrapper>
         <PosterImage
           src={`${PREFIX_POSTER_URL}/${movie.poster_path}`}
           alt={`${movie.title}`}
@@ -44,9 +41,25 @@ const MovieDetails = () => {
           <Overview>
             <b>Overview</b>
             <p>{movie.overview}</p>
+            <b>Genres</b>
+            <ul>
+              {movie.genres.map(genre => {
+                return <li key={genre.id}>{genre.name}</li>;
+              })}
+            </ul>
           </Overview>
         </div>
-      </Wrapper>
+      </MovieDetailsWrapper>
+      <AddInfoWrapper>
+        <h2>Additional information</h2>
+        <Link to="cast" state={location.state}>
+          Cast
+        </Link>
+        <Link to="reviews" state={location.state}>
+          Reviews
+        </Link>
+      </AddInfoWrapper>
+      <Outlet />
     </>
   );
 };

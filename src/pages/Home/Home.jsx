@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 
-import { fetchMovie } from 'utils/api';
+import { getTrendingMovies } from 'utils/api';
 
 import { Container } from 'components/App/App.styled';
 import { Title } from './Home.styled';
@@ -13,7 +13,7 @@ const Home = () => {
 
   // Fetchs movies on mount
   useEffect(() => {
-    fetchMovie('').then(setMovies);
+    getTrendingMovies('').then(setMovies);
   }, []);
 
   return (

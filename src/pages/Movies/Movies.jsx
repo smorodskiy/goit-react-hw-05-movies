@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
-import { fetchMovie } from 'utils/api';
+import { getMovieByQuery } from 'utils/api';
 import { Button, FormStyled, Input, SearchWrap } from './Movies.styled';
 import  MovieList  from 'components/MoviesList/MoviesList';
 
@@ -15,14 +15,13 @@ const Movies = () => {
 
   const handleSubmitQuery = e => {
     e.preventDefault();
-    setSearchParams({ query });
-    console.log('test');
+    setSearchParams({ query });    
   };
 
   useEffect(() => {
     const query = searchParams.get('query');
     if (!query) return;
-    fetchMovie({ keyword: query }).then(setMovies);
+    getMovieByQuery(query).then(setMovies);
   }, [searchParams]);
 
   return (
