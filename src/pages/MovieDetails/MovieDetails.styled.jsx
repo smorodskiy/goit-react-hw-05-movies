@@ -25,6 +25,8 @@ export const MovieDetailsWrapper = styled.div`
 `;
 
 export const AddInfoWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
   padding: 20px;
 `;
 
